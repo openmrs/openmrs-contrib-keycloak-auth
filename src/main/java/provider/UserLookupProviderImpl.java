@@ -19,15 +19,14 @@ public class UserLookupProviderImpl implements UserLookupProvider {
     protected ComponentModel model;
 
     // map of loaded users in this transaction
+    protected Map<String, UserModel> loadedUsers=new HashMap<String, UserModel>();
+
     public UserLookupProviderImpl(KeycloakSession session, Properties properties, ComponentModel model, Map<String, UserModel> loadedUsers) {
         this.session = session;
         this.properties = properties;
         this.model = model;
         this.loadedUsers = loadedUsers;
     }
-
-    protected Map<String, UserModel> loadedUsers=new HashMap<String, UserModel>();
-
 
     public UserModel getUserById(String id, RealmModel realmModel) {
         StorageId storageId = new StorageId(id);
