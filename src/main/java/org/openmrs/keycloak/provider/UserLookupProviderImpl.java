@@ -1,4 +1,4 @@
-package provider;
+package org.openmrs.keycloak.provider;
 
 import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;

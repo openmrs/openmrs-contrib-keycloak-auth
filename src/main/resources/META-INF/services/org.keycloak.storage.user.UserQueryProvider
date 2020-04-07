@@ -1,1 +1,1 @@
-provider.UserQueryProviderImpl
+org.openmrs.keycloak.provider.UserQueryProviderImpl

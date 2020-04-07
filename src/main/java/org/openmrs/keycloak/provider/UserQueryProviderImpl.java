@@ -1,4 +1,4 @@
-package provider;
+package org.openmrs.keycloak.provider;
 
 import org.keycloak.models.GroupModel;
 import org.keycloak.models.RealmModel;

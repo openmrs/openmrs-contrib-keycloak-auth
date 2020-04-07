@@ -1,1 +1,1 @@
-provider.UserLookupProviderImpl
+org.openmrs.keycloak.provider.UserLookupProviderImpl
