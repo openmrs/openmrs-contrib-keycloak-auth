@@ -1,1 +1,5 @@
-App.class
+provider/CredentialInputValidatorImpl.class
+provider/UserLookupProviderImpl.class
+provider/UserLookupProviderImpl$1.class
+UserModel.class
+provider/UserQueryProviderImpl.class
