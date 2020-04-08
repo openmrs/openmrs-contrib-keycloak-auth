@@ -58,11 +58,17 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.19</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.openmrs.api/openmrs-api -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api -->
         <dependency>
-            <groupId>org.openmrs.api</groupId>
-            <artifactId>openmrs-api</artifactId>
-            <version>2.0.4</version>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.14.Final</version>
         </dependency>
 
     </dependencies>
@@ -86,5 +92,25 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <subsystem xmlns="urn:jboss:domain:datasources:5.0" >
+        <datasources>
+            <datasource jndi-name="java:jboss/datasources/OpenmrsDS" pool-name="OpenmrsDS" enabled="true"
+                        use-java-context="true">
+                <connection-url>jdbc:mysql://localhost:3306/openmrs</connection-url>
+                <driver>mysql</driver>
+                <pool>
+                    <max-pool-size>20</max-pool-size>
+                </pool>
+                <security>
+                    <user-name>openmrs</user-name>
+                    <password>openmrs</password>
+                </security>
+            </datasource>
+
+        </datasources>
+    </subsystem>
+
 
 </project>
