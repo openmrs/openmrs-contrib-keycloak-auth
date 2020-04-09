@@ -10,13 +10,19 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public @Data class UserModel {
+public @Data class PersonNameModel {
+
     @Id
-    private Integer userId;
+    private Integer personNameId;
 
     private PersonModel person;
 
-    private String username;
+    private String prefix;
 
-    private String email;
+    private String givenName;
+
+    private String middleName;
+
+    private String familyName;
+
 }

@@ -1,21 +1,24 @@
 package org.openmrs.keycloak.data;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 public class UserDAO {
 
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    protected EntityManager em;
 
-    public UserModel getUserByUsername(UserModel user){
-        String queryString = "FROM org.openmrs.keycloak.data.UserModel where user.userId = :username";//How to write these?
-        Session session=sessionFactory.getCurrentSession();
-        Query query=session.createQuery(queryString);
-        query.setParameter("",user.getUsername());
-        List<UserModel> userModelList=query.list();
-        return userModelList.get(0);
+    public UserModel getUserByUsername(UserModel user) {
+        Query query = em.createQuery("select u from UserModel u where u.username = :username", UserModel.class);
+        query.setParameter("username", user.getUsername());
+        return (UserModel) query.getSingleResult();
+    }
+
+    public UserModel getUserByUserGivenName(PersonNameModel personName) {
+        Query query = em.createQuery("select u from UserModel, PersonNameModel pn  where pn.givenName = :givenName and pn.personNameId=u.userId", UserModel.class);
+        query.setParameter("givenName", personName.getGivenName());
+        return (UserModel) query.getSingleResult();
     }
 }

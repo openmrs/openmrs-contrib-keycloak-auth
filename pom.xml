@@ -70,6 +70,13 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.14.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
     <build>
@@ -92,25 +99,4 @@
             </plugin>
         </plugins>
     </build>
-
-
-    <subsystem xmlns="urn:jboss:domain:datasources:5.0" >
-        <datasources>
-            <datasource jndi-name="java:jboss/datasources/OpenmrsDS" pool-name="OpenmrsDS" enabled="true"
-                        use-java-context="true">
-                <connection-url>jdbc:mysql://localhost:3306/openmrs</connection-url>
-                <driver>mysql</driver>
-                <pool>
-                    <max-pool-size>20</max-pool-size>
-                </pool>
-                <security>
-                    <user-name>openmrs</user-name>
-                    <password>openmrs</password>
-                </security>
-            </datasource>
-
-        </datasources>
-    </subsystem>
-
-
 </project>

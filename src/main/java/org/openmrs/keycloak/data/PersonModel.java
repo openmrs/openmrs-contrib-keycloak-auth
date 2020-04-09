@@ -4,19 +4,19 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Set;
 
 @Setter(AccessLevel.PACKAGE)
 @Getter(AccessLevel.PACKAGE)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public @Data class UserModel {
+public @Data class PersonModel {
+
     @Id
-    private Integer userId;
+    protected Integer personId;
 
-    private PersonModel person;
+    private PersonNameModel names;
 
-    private String username;
-
-    private String email;
+    private String gender;
 }
