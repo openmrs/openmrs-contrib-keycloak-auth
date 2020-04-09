@@ -31,14 +31,17 @@ public class UserLookupProviderImpl implements UserLookupProvider {
         this.loadedUsers = loadedUsers;
     }
 
+    @Override
     public UserModel getUserById(String id, RealmModel realmModel) {
-         return new UserAdapter(session, realmModel, model, userDAO.getUserByUsername(id));
+         return new UserAdapter(session, realmModel, model, userDAO.getUserByUserId(Integer.parseInt(id)));
     }
 
+    @Override
     public UserModel getUserByUsername(String username, RealmModel realmModel) {
-        return new UserAdapter(session, realmModel, model, userDAO.getUserByUserId(username));
+        return new UserAdapter(session, realmModel, model, userDAO.getUserByUsername(username));
     }
 
+    @Override
     public UserModel getUserByEmail(String email, RealmModel realmModel) {
         return new UserAdapter(session, realmModel, model, userDAO.getUserByEmail(email));
     }

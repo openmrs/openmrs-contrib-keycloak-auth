@@ -28,17 +28,20 @@ public class CredentialInputValidatorImpl implements CredentialInputValidator {
         this.loadedUsers = loadedUsers;
     }
 
+    @Override
     public boolean supportsCredentialType(String credentialType) {
         return credentialType.equals(CredentialModel.PASSWORD);
 
     }
 
+    @Override
     public boolean isConfiguredFor(RealmModel realmModel, UserModel userModel, String credentialType) {
         String password = properties.getProperty(userModel.getUsername());
         return credentialType.equals(CredentialModel.PASSWORD) && password != null;
 
     }
 
+    @Override
     public boolean isValid(RealmModel realmModel, UserModel userModel, CredentialInput credentialInput) {
         if (!supportsCredentialType(credentialInput.getType()))
             return false;

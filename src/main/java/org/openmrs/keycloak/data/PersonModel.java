@@ -2,21 +2,19 @@ package org.openmrs.keycloak.data;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "person")
-public @Data class PersonModel {
+public @Data
+class PersonModel {
 
     @Id
     protected Integer personId;
 
-    @OneToMany
-    private Set <PersonNameModel> names;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "person_id", orphanRemoval = true)
+    private Set<PersonNameModel> names;
 
     private String gender;
 }

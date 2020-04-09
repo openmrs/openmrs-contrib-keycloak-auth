@@ -2,10 +2,7 @@ package org.openmrs.keycloak.data;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "person_name")
@@ -14,7 +11,8 @@ public @Data class PersonNameModel {
     @Id
     private Integer personNameId;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "person_id", nullable = false)
     private PersonModel person;
 
     private String givenName;
