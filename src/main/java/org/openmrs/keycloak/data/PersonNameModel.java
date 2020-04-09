@@ -4,20 +4,18 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-@Setter(AccessLevel.PACKAGE)
-@Getter(AccessLevel.PACKAGE)
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name = "person_name")
 public @Data class PersonNameModel {
 
     @Id
     private Integer personNameId;
 
+    @ManyToOne
     private PersonModel person;
-
-    private String prefix;
 
     private String givenName;
 

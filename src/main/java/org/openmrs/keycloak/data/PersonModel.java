@@ -4,19 +4,19 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.Set;
 
-@Setter(AccessLevel.PACKAGE)
-@Getter(AccessLevel.PACKAGE)
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name = "person")
 public @Data class PersonModel {
 
     @Id
     protected Integer personId;
 
-    private PersonNameModel names;
+    @OneToMany
+    private Set <PersonNameModel> names;
 
     private String gender;
 }
