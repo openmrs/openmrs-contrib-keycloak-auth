@@ -32,7 +32,7 @@ public class UserLookupProviderImpl implements UserLookupProvider {
     }
 
     public UserModel getUserById(String id, RealmModel realmModel) {
-        new UserAdapter(session, realmModel, model, userDAO.getUserByUsername(id));
+         return new UserAdapter(session, realmModel, model, userDAO.getUserByUsername(id));
     }
 
     public UserModel getUserByUsername(String username, RealmModel realmModel) {

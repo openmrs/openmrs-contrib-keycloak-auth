@@ -1,11 +1,12 @@
 package org.openmrs.keycloak.data;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.storage.StorageId;
 import org.keycloak.storage.adapter.AbstractUserAdapterFederatedStorage;
-
 
 public class UserAdapter extends AbstractUserAdapterFederatedStorage {
 
@@ -15,7 +16,7 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     public UserAdapter(KeycloakSession session, RealmModel realm, ComponentModel storageProviderModel, UserModel userModel) {
         super(session, realm, storageProviderModel);
         this.userModel = userModel;
-        keycloakId = StorageId.keycloakId(storageProviderModel, userModel.getUserId());
+        keycloakId = StorageId.keycloakId(storageProviderModel, String.valueOf(userModel.getUserId()));
     }
 
     @Override
@@ -24,8 +25,8 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     }
 
     @Override
-    public void setUsername(String s) {
-        userModel.setUsername(s);
+    public void setUsername(String username) {
+        userModel.setUsername(username);
     }
 
     @Override
@@ -37,10 +38,4 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     public String getEmail() {
         return userModel.getEmail();
     }
-
-    @Override
-    public String getId() {
-        return keycloakId;
-    }
-
 }
