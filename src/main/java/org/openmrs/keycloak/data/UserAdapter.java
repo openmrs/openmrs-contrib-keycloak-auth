@@ -3,6 +3,7 @@ package org.openmrs.keycloak.data;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
+import org.keycloak.storage.StorageId;
 import org.keycloak.storage.adapter.AbstractUserAdapterFederatedStorage;
 
 
@@ -11,10 +12,10 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     private UserModel userModel;
     private String keycloakId;
 
-    public UserAdapter(KeycloakSession session, RealmModel realm, ComponentModel storageProviderModel, UserModel userModel, String keycloakId) {
+    public UserAdapter(KeycloakSession session, RealmModel realm, ComponentModel storageProviderModel, UserModel userModel) {
         super(session, realm, storageProviderModel);
         this.userModel = userModel;
-        this.keycloakId = keycloakId;
+        keycloakId = StorageId.keycloakId(storageProviderModel, userModel.getUserId());
     }
 
     @Override

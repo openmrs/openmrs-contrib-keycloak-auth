@@ -7,6 +7,8 @@ import org.keycloak.models.UserModel;
 import org.keycloak.storage.StorageId;
 import org.keycloak.storage.adapter.AbstractUserAdapter;
 import org.keycloak.storage.user.UserLookupProvider;
+import org.openmrs.keycloak.data.UserAdapter;
+import org.openmrs.keycloak.data.UserDAO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +19,10 @@ public class UserLookupProviderImpl implements UserLookupProvider {
     protected KeycloakSession session;
     protected Properties properties;
     protected ComponentModel model;
+    private UserDAO userDAO;
 
     // map of loaded users in this transaction
-    protected Map<String, UserModel> loadedUsers=new HashMap<String, UserModel>();
+    protected Map<String, UserModel> loadedUsers = new HashMap<String, UserModel>();
 
     public UserLookupProviderImpl(KeycloakSession session, Properties properties, ComponentModel model, Map<String, UserModel> loadedUsers) {
         this.session = session;
@@ -29,32 +32,14 @@ public class UserLookupProviderImpl implements UserLookupProvider {
     }
 
     public UserModel getUserById(String id, RealmModel realmModel) {
-        StorageId storageId = new StorageId(id);
-        String username = storageId.getExternalId();
-        return getUserByUsername(username, realmModel);
+        new UserAdapter(session, realmModel, model, userDAO.getUserByUsername(id));
     }
 
     public UserModel getUserByUsername(String username, RealmModel realmModel) {
-        UserModel adapter = loadedUsers.get(username);
-        if (adapter == null) {
-            String password = properties.getProperty(username);
-            if (password != null) {
-                adapter = createAdapter(realmModel, username);
-                loadedUsers.put(username, adapter);
-            }
-        }
-        return adapter;
+        return new UserAdapter(session, realmModel, model, userDAO.getUserByUserId(username));
     }
 
-    protected UserModel createAdapter(RealmModel realm, final String username) {
-        return new AbstractUserAdapter(session, realm, model) {
-            public String getUsername() {
-                return username;
-            }
-        };
-    }
-
-    public UserModel getUserByEmail(String s, RealmModel realmModel) {
-        return null;
+    public UserModel getUserByEmail(String email, RealmModel realmModel) {
+        return new UserAdapter(session, realmModel, model, userDAO.getUserByEmail(email));
     }
 }
