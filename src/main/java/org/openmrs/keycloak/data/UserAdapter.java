@@ -19,6 +19,15 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
         keycloakId = StorageId.keycloakId(storageProviderModel, String.valueOf(userModel.getUserId()));
     }
 
+
+    public int getUserId() {
+        return userModel.getUserId();
+    }
+
+    public void setUserId(int userId) {
+        userModel.setUserId(userId);
+    }
+
     @Override
     public String getUsername() {
         return userModel.getUsername();
@@ -30,12 +39,12 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     }
 
     @Override
-    public void setEmail(String email) {
-        userModel.setEmail(email);
+    public String getEmail() {
+        return userModel.getEmail();
     }
 
     @Override
-    public String getEmail() {
-        return userModel.getEmail();
+    public void setEmail(String email) {
+        userModel.setEmail(email);
     }
 }
