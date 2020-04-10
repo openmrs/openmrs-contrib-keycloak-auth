@@ -1,4 +1,4 @@
-package org.openmrs.keycloak.data;
+package org.openmrs.keycloak.models;
 
 import lombok.*;
 
@@ -17,5 +17,7 @@ public @Data class UserModel {
     private String username;
 
     private String email;
+//TODO is it correct?
+    private String password;
 
 }

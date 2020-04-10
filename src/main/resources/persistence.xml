@@ -8,7 +8,7 @@
         <jta-data-source>java:jboss/datasources/OpenmrsDS</jta-data-source>
 
         <!-- Change this to the name of the actual class -->
-        <class>org.openmrs.keycloak.data.UserModel</class>
+        <class>org.openmrs.keycloak.models.UserModel</class>
 
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

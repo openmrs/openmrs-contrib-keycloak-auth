@@ -1,4 +1,4 @@
-package org.openmrs.keycloak.data;
+package org.openmrs.keycloak.models;
 
 import lombok.*;
 
