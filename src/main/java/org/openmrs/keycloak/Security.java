@@ -8,7 +8,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Security {
-    //TODO I have replaced all the APIException to RuntimeException
     private static final Logger log = LoggerFactory.getLogger(Security.class);
 
     public static boolean hashMatches(String hashedPassword, String passwordToHash) {
@@ -16,9 +15,7 @@ public class Security {
             throw new RuntimeException("password.cannot.be.null");
         }
 
-        return hashedPassword.equals(encodeString(passwordToHash))
-                || hashedPassword.equals(encodeStringSHA1(passwordToHash))
-                || hashedPassword.equals(incorrectlyEncodeString(passwordToHash));
+        return hashedPassword.equals(encodeString(passwordToHash));
     }
 
     public static String encodeString(String strToEncode) throws RuntimeException {
@@ -41,37 +38,37 @@ public class Security {
         return "Can't encode password because the given algorithm: " + algo + " was not found! (fail)";
     }
 
-    private static String encodeStringSHA1(String strToEncode) throws RuntimeException {
-        String algorithm = "SHA1";
-        MessageDigest md;
-        byte[] input;
-        try {
-            md = MessageDigest.getInstance(algorithm);
-            input = strToEncode.getBytes(StandardCharsets.UTF_8);
-        } catch (NoSuchAlgorithmException e) {
-            // Yikes! Can't encode password...what to do?
-            log.error(getPasswordEncodeFailMessage(algorithm), e);
-            throw new RuntimeException("system.cannot.find.encryption.algorithm");
-        }
+//    private static String encodeStringSHA1(String strToEncode) throws RuntimeException {
+//        String algorithm = "SHA1";
+//        MessageDigest md;
+//        byte[] input;
+//        try {
+//            md = MessageDigest.getInstance(algorithm);
+//            input = strToEncode.getBytes(StandardCharsets.UTF_8);
+//        } catch (NoSuchAlgorithmException e) {
+//            // Yikes! Can't encode password...what to do?
+//            log.error(getPasswordEncodeFailMessage(algorithm), e);
+//            throw new RuntimeException("system.cannot.find.encryption.algorithm");
+//        }
+//
+//        return hexString(md.digest(input));
+//    }
 
-        return hexString(md.digest(input));
-    }
-
-    private static String incorrectlyEncodeString(String strToEncode) throws RuntimeException {
-        String algorithm = "SHA1";
-        MessageDigest md;
-        byte[] input;
-        try {
-            md = MessageDigest.getInstance(algorithm);
-            input = strToEncode.getBytes(StandardCharsets.UTF_8);
-        } catch (NoSuchAlgorithmException e) {
-            // Yikes! Can't encode password...what to do?
-            log.error(getPasswordEncodeFailMessage(algorithm), e);
-            throw new RuntimeException("system.cannot.find.encryption.algorithm");
-        }
-
-        return incorrectHexString(md.digest(input));
-    }
+//    private static String incorrectlyEncodeString(String strToEncode) throws RuntimeException {
+//        String algorithm = "SHA1";
+//        MessageDigest md;
+//        byte[] input;
+//        try {
+//            md = MessageDigest.getInstance(algorithm);
+//            input = strToEncode.getBytes(StandardCharsets.UTF_8);
+//        } catch (NoSuchAlgorithmException e) {
+//            // Yikes! Can't encode password...what to do?
+//            log.error(getPasswordEncodeFailMessage(algorithm), e);
+//            throw new RuntimeException("system.cannot.find.encryption.algorithm");
+//        }
+//
+//        return incorrectHexString(md.digest(input));
+//    }
 
     private static String hexString(byte[] block) {
         StringBuilder buf = new StringBuilder();
@@ -88,14 +85,14 @@ public class Security {
         return buf.toString();
     }
 
-    private static String incorrectHexString(byte[] b) {
-        if (b == null || b.length < 1) {
-            return "";
-        }
-        StringBuilder s = new StringBuilder();
-        for (byte aB : b) {
-            s.append(Integer.toHexString(aB & 0xFF));
-        }
-        return new String(s);
-    }
+//    private static String incorrectHexString(byte[] b) {
+//        if (b == null || b.length < 1) {
+//            return "";
+//        }
+//        StringBuilder s = new StringBuilder();
+//        for (byte aB : b) {
+//            s.append(Integer.toHexString(aB & 0xFF));
+//        }
+//        return new String(s);
+//    }
 }

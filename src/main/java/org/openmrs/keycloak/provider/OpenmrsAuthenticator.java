@@ -1,7 +1,6 @@
 package org.openmrs.keycloak.provider;
 
 
-import org.hibernate.type.StandardBasicTypes;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
@@ -16,7 +15,6 @@ import org.openmrs.keycloak.data.UserDAO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -67,29 +65,22 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
         return credentialType.equals(CredentialModel.PASSWORD) && getPassword(userModel) != null;
     }
 
-    //TODO Not sure how to get the entered password
     @Override
     public boolean isValid(RealmModel realmModel, UserModel userModel, CredentialInput credentialInput) {
         if (!supportsCredentialType(credentialInput.getType()))
             return false;
-//TODO Should all the query part be shifted to UserDAO
-        TypedQuery<org.openmrs.keycloak.models.UserModel> query = em.createQuery("select u from UserModel u where u.username = :username", org.openmrs.keycloak.models.UserModel.class);
-        query.setParameter("username", userModel.getUsername());
-        org.openmrs.keycloak.models.UserModel user = query.getSingleResult();
 
-        TypedQuery<String> queryPassword = em.
-                createQuery("select password from users where user_id = :userId", String.class);
-        queryPassword.setParameter("password", StandardBasicTypes.STRING);
-        queryPassword.setParameter("userId", user.getUserId());
-        String passwordOnRecord = queryPassword.getSingleResult();
+        String passwordOnRecord = userDAO.getUserPasswordOnRecord(userModel);
 
-        TypedQuery<String> querySalt = em.
-                createQuery("select salt from users where user_id = :userId", String.class);
-        querySalt.setParameter("salt", StandardBasicTypes.STRING);
-        querySalt.setParameter("userId", user.getUserId());
-        String saltOnRecord = querySalt.getSingleResult();
+        String saltOnRecord = userDAO.getUserSaltOnRecord(userModel);
 
-        return passwordOnRecord != null && Security.hashMatches(passwordOnRecord, getPassword(userModel) + saltOnRecord);
+        String currentPassword = getPassword(userModel);
+
+        if (passwordOnRecord == null || saltOnRecord == null || currentPassword == null) {
+            return false;
+        }
+
+        return Security.hashMatches(passwordOnRecord, currentPassword + saltOnRecord);
     }
 
     public String getPassword(UserModel user) {
