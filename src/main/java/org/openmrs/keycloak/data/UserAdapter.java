@@ -7,8 +7,11 @@ import org.keycloak.storage.StorageId;
 import org.keycloak.storage.adapter.AbstractUserAdapterFederatedStorage;
 import org.openmrs.keycloak.models.UserModel;
 
+import javax.inject.Inject;
+
 public class UserAdapter extends AbstractUserAdapterFederatedStorage {
 
+    @Inject
     private UserModel userModel;
     private String keycloakId;
 
