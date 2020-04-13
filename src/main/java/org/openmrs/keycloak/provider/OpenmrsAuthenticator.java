@@ -9,7 +9,6 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserCredentialModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.credential.PasswordCredentialModel;
-import org.keycloak.provider.Provider;
 import org.keycloak.storage.UserStorageProvider;
 import org.keycloak.storage.user.UserLookupProvider;
 import org.openmrs.keycloak.data.UserAdapter;
@@ -17,26 +16,23 @@ import org.openmrs.keycloak.data.UserDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 
 public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInputValidator, UserStorageProvider {
 
-    @PersistenceContext
-    private EntityManager em;
-
     protected KeycloakSession session;
     protected Properties properties;
     protected ComponentModel model;
-    private UserDAO userDAO;
+    @Inject
+    protected UserDAO userDAO;
 
     private static final Logger log = LoggerFactory.getLogger(OpenmrsAuthenticator.class);
 
