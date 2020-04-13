@@ -46,12 +46,4 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     public void setEmail(String email) {
         userModel.setEmail(email);
     }
-
-    public String getPassword() {
-        return userModel.getPassword();
-    }
-
-    public void setPassword(String password) {
-        userModel.setPassword(password);
-    }
 }

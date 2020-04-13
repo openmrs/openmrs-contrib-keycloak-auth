@@ -32,31 +32,23 @@ public class UserDAO {
         return query.getSingleResult();
     }
 
-    public String getUserPasswordOnRecord(org.keycloak.models.UserModel userModel){
+    public String[] getUserPasswordAndSaltOnRecord(org.keycloak.models.UserModel userModel) {
+        String[] passwordAndSalt=new String[2];
         TypedQuery<UserModel> query = em.createQuery("select u from UserModel u where u.username = :username", UserModel.class);
         query.setParameter("username", userModel.getUsername());
         UserModel user = query.getSingleResult();
 
-        TypedQuery<String> queryPassword = em.
-                createQuery("select password from users where user_id = :userId", String.class);
+        TypedQuery<String> queryPassword = em.createQuery("select password from users where user_id = :userId", String.class);
         queryPassword.setParameter("password", StandardBasicTypes.STRING);
         queryPassword.setParameter("userId", user.getUserId());
+        passwordAndSalt[0]=queryPassword.getSingleResult();
 
-        return queryPassword.getSingleResult();
-    }
 
-    public String getUserSaltOnRecord(org.keycloak.models.UserModel userModel){
-        TypedQuery<UserModel> query = em.createQuery("select u from UserModel u where u.username = :username", UserModel.class);
-        query.setParameter("username", userModel.getUsername());
-        UserModel user = query.getSingleResult();
-
-        TypedQuery<String> querySalt = em.
-                createQuery("select salt from users where user_id = :userId", String.class);
+        TypedQuery<String> querySalt = em.createQuery("select salt from users where user_id = :userId", String.class);
         querySalt.setParameter("salt", StandardBasicTypes.STRING);
         querySalt.setParameter("userId", user.getUserId());
+        passwordAndSalt[1]=querySalt.getSingleResult();
 
-        return querySalt.getSingleResult();
+        return passwordAndSalt;
     }
-
-
 }

@@ -17,7 +17,4 @@ public @Data class UserModel {
     private String username;
 
     private String email;
-//TODO is it correct?
-    private String password;
-
 }
