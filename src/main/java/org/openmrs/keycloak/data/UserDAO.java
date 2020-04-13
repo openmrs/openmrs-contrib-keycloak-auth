@@ -1,12 +1,14 @@
 package org.openmrs.keycloak.data;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.type.StandardBasicTypes;
 import org.openmrs.keycloak.models.UserModel;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 public class UserDAO {
@@ -33,22 +35,13 @@ public class UserDAO {
     }
 
     public String[] getUserPasswordAndSaltOnRecord(org.keycloak.models.UserModel userModel) {
-        String[] passwordAndSalt=new String[2];
-        TypedQuery<UserModel> query = em.createQuery("select u from UserModel u where u.username = :username", UserModel.class);
+        String username = userModel.getUsername();
+        if (StringUtils.isBlank(username)) {
+            throw new IllegalArgumentException("Username cannot be blank");
+        }
+
+        Query query = em.createNativeQuery("select password, salt from users u where u.username = :username");
         query.setParameter("username", userModel.getUsername());
-        UserModel user = query.getSingleResult();
-
-        TypedQuery<String> queryPassword = em.createQuery("select password from users where user_id = :userId", String.class);
-        queryPassword.setParameter("password", StandardBasicTypes.STRING);
-        queryPassword.setParameter("userId", user.getUserId());
-        passwordAndSalt[0]=queryPassword.getSingleResult();
-
-
-        TypedQuery<String> querySalt = em.createQuery("select salt from users where user_id = :userId", String.class);
-        querySalt.setParameter("salt", StandardBasicTypes.STRING);
-        querySalt.setParameter("userId", user.getUserId());
-        passwordAndSalt[1]=querySalt.getSingleResult();
-
-        return passwordAndSalt;
+        return (String[]) query.getSingleResult();
     }
 }

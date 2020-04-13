@@ -10,6 +10,7 @@ import org.keycloak.models.UserCredentialModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.provider.Provider;
+import org.keycloak.storage.UserStorageProvider;
 import org.keycloak.storage.user.UserLookupProvider;
 import org.openmrs.keycloak.data.UserAdapter;
 import org.openmrs.keycloak.data.UserDAO;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,7 +28,7 @@ import java.util.Map;
 import java.util.Properties;
 
 
-public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInputValidator, Provider {
+public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInputValidator, UserStorageProvider {
 
     @PersistenceContext
     private EntityManager em;
@@ -80,8 +82,13 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
             return false;
         }
 
-        String[] passwordAndSalt = new String[2];
-        passwordAndSalt = userDAO.getUserPasswordAndSaltOnRecord(userModel);
+        String[] passwordAndSalt;
+        try {
+            passwordAndSalt = userDAO.getUserPasswordAndSaltOnRecord(userModel);
+        } catch (PersistenceException e) {
+            log.error("Caught exception while fetching password and salt from database", e);
+            return false;
+        }
 
         String passwordOnRecord = passwordAndSalt[0];
 
@@ -102,10 +109,9 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
             md = MessageDigest.getInstance(algorithm);
             input = passwordToHash.getBytes(StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            log.error("Caught exception while computing salted hash for user {}", userModel.getUsername(), e);
             return false;
         }
-        log.error("No such Algorithm exist");
 
         return passwordOnRecord.equals(hexString(md.digest(input)));
     }
@@ -127,5 +133,6 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
 
     @Override
     public void close() {
+
     }
 }
