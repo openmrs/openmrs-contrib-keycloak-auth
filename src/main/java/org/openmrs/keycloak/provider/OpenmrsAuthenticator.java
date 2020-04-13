@@ -41,14 +41,10 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
     private static final Logger log = LoggerFactory.getLogger(OpenmrsAuthenticator.class);
 
 
-    // map of loaded users in this transaction
-    protected Map<String, UserModel> loadedUsers = new HashMap<String, UserModel>();
-
-    public OpenmrsAuthenticator(KeycloakSession session, Properties properties, ComponentModel model, Map<String, UserModel> loadedUsers) {
+    public OpenmrsAuthenticator(KeycloakSession session, Properties properties, ComponentModel model) {
         this.session = session;
         this.properties = properties;
         this.model = model;
-        this.loadedUsers = loadedUsers;
     }
 
     @Override
