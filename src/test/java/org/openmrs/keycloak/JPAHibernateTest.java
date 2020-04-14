@@ -23,7 +23,7 @@ public class JPAHibernateTest {
 
     @BeforeClass
     public static void init() throws FileNotFoundException, SQLException {
-        emf = Persistence.createEntityManagerFactory("mnf-pu-test");
+        emf = Persistence.createEntityManagerFactory("openmrs-persistence-test");
         em = emf.createEntityManager();
     }
 

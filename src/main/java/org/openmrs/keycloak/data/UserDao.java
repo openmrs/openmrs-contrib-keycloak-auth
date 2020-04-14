@@ -9,9 +9,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class UserDAO {
+public class UserDao {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "openmrs-persistence")
     private EntityManager em;
 
     public UserModel getUserByUsername(String username) {
