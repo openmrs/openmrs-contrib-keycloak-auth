@@ -17,7 +17,9 @@ CREATE TABLE users (
   user_id int(11) NOT NULL PRIMARY KEY,
   person_id int(11) DEFAULT NULL,
   username varchar(255) NOT NULL,
-  email varchar(255) DEFAULT NULL);
+  email varchar(255) DEFAULT NULL,
+  password varchar(128) DEFAULT NULL,
+  salt varchar(128) DEFAULT NULL);
 
 ALTER TABLE users
     ADD FOREIGN KEY (person_id)

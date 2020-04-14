@@ -32,7 +32,7 @@ public class UserDao {
         return query.getSingleResult();
     }
 
-    public String[] getUserPasswordAndSaltOnRecord(org.keycloak.models.UserModel userModel) {
+    public Object[] getUserPasswordAndSaltOnRecord(org.keycloak.models.UserModel userModel) {
         String username = userModel.getUsername();
         if (StringUtils.isBlank(username)) {
             throw new IllegalArgumentException("Username cannot be blank");
@@ -40,6 +40,6 @@ public class UserDao {
 
         Query query = em.createNativeQuery("select password, salt from users u where u.username = :username");
         query.setParameter("username", userModel.getUsername());
-        return (String[]) query.getSingleResult();
+        return (Object[]) query.getSingleResult();
     }
 }

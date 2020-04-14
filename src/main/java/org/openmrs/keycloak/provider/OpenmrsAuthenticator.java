@@ -71,7 +71,7 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
             return false;
         }
 
-        String[] passwordAndSalt;
+        Object[] passwordAndSalt;
         try {
             passwordAndSalt = userDao.getUserPasswordAndSaltOnRecord(userModel);
         } catch (PersistenceException e) {
@@ -79,9 +79,9 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
             return false;
         }
 
-        String passwordOnRecord = passwordAndSalt[0];
+        String passwordOnRecord = passwordAndSalt[0].toString();
 
-        String saltOnRecord = passwordAndSalt[1];
+        String saltOnRecord = passwordAndSalt[1].toString();
 
         String currentPassword = credentialInput.getChallengeResponse();
 
