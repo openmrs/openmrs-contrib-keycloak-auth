@@ -11,16 +11,15 @@ import static org.junit.Assert.assertEquals;
 public class JPAHibernateCRUDTest extends JPAHibernateTest {
 
     @Test
-    public void getUserByUsername()
-    {
-        UserModel query = em.createQuery("select u from UserModel u where u.username = admin", UserModel.class).getSingleResult();
+    public void getUserByUsername() {
+        UserModel query = em.createQuery("select u from UserModel u where u.username = 'admin'", UserModel.class).getSingleResult();
         assertEquals("admin",query.getUsername());
 
     }
 
     @Test
     public void testGetObjectById_success() {
-        UserModel userModel = em.find(UserModel.class, 1);
+        UserModel userModel = em.find(UserModel.class, 152);
         assertNotNull(userModel);
     }
 

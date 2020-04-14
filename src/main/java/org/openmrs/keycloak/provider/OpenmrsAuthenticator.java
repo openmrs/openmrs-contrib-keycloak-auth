@@ -1,6 +1,7 @@
 package org.openmrs.keycloak.provider;
 
 
+import lombok.Setter;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
@@ -12,7 +13,7 @@ import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.storage.UserStorageProvider;
 import org.keycloak.storage.user.UserLookupProvider;
 import org.openmrs.keycloak.data.UserAdapter;
-import org.openmrs.keycloak.data.UserDAO;
+import org.openmrs.keycloak.data.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
@@ -22,17 +23,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
-
 public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInputValidator, UserStorageProvider {
 
     protected KeycloakSession session;
     protected Properties properties;
     protected ComponentModel model;
-    @Inject
-    protected UserDAO userDAO;
+
+    @Setter(onMethod = @__({@Inject}))
+    protected UserDao userDao;
 
     private static final Logger log = LoggerFactory.getLogger(OpenmrsAuthenticator.class);
-
 
     public OpenmrsAuthenticator(KeycloakSession session, Properties properties, ComponentModel model) {
         this.session = session;
@@ -42,17 +42,17 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
 
     @Override
     public UserModel getUserById(String id, RealmModel realmModel) {
-        return new UserAdapter(session, realmModel, model, userDAO.getUserByUserId(Integer.parseInt(id)));
+        return new UserAdapter(session, realmModel, model, userDao.getUserByUserId(Integer.parseInt(id)));
     }
 
     @Override
     public UserModel getUserByUsername(String username, RealmModel realmModel) {
-        return new UserAdapter(session, realmModel, model, userDAO.getUserByUsername(username));
+        return new UserAdapter(session, realmModel, model, userDao.getUserByUsername(username));
     }
 
     @Override
     public UserModel getUserByEmail(String email, RealmModel realmModel) {
-        return new UserAdapter(session, realmModel, model, userDAO.getUserByEmail(email));
+        return new UserAdapter(session, realmModel, model, userDao.getUserByEmail(email));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
 
         String[] passwordAndSalt;
         try {
-            passwordAndSalt = userDAO.getUserPasswordAndSaltOnRecord(userModel);
+            passwordAndSalt = userDao.getUserPasswordAndSaltOnRecord(userModel);
         } catch (PersistenceException e) {
             log.error("Caught exception while fetching password and salt from database", e);
             return false;

@@ -1,1 +1,1 @@
-INSERT INTO users VALUES (152,'admin','admin@gmail.com')
+INSERT INTO users (user_id, username) VALUES (152,'admin');
