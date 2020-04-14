@@ -15,10 +15,7 @@ import org.openmrs.keycloak.data.UserAdapter;
 import org.openmrs.keycloak.data.UserDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

@@ -2,7 +2,6 @@ package org.openmrs.keycloak.data;
 
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.type.StandardBasicTypes;
 import org.openmrs.keycloak.models.UserModel;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
