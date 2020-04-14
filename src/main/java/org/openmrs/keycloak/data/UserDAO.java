@@ -1,10 +1,9 @@
 package org.openmrs.keycloak.data;
 
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.keycloak.models.UserModel;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
