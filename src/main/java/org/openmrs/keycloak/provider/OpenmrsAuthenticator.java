@@ -31,8 +31,8 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
     protected Properties properties;
     protected ComponentModel model;
 
-    @Setter(onMethod = @__({@Inject}))
-    protected UserDao userDao;
+//    @Setter(onMethod = @__({@Inject}))
+    protected UserDao userDao=new UserDao();
 
     private static final Logger log = LoggerFactory.getLogger(OpenmrsAuthenticator.class);
 
