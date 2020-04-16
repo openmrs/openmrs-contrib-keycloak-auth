@@ -9,7 +9,7 @@
         <!-- add classes -->
         <class>org.openmrs.keycloak.models.PersonModel</class>
         <class>org.openmrs.keycloak.models.PersonNameModel</class>
-        <class>org.openmrs.keycloak.models.UserModel</class>
+        <class>org.openmrs.keycloak.models.OpenmrsUserModel</class>
 
         <properties>
             <!-- Configuring JDBC properties -->

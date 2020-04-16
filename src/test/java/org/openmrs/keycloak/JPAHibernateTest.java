@@ -25,10 +25,7 @@ public class JPAHibernateTest {
     public static void init() throws FileNotFoundException, SQLException {
         emf = Persistence.createEntityManagerFactory("openmrs-persistence-test");
         em = emf.createEntityManager();
-    }
 
-    @Before
-    public void initializeDatabase(){
         Session session = em.unwrap(Session.class);
         session.doWork(new Work() {
             @Override

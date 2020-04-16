@@ -3,44 +3,40 @@ package org.openmrs.keycloak.data;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
-import org.keycloak.storage.StorageId;
 import org.keycloak.storage.adapter.AbstractUserAdapterFederatedStorage;
-import org.openmrs.keycloak.models.UserModel;
+import org.openmrs.keycloak.models.OpenmrsUserModel;
 
 public class UserAdapter extends AbstractUserAdapterFederatedStorage {
 
-    private final UserModel userModel;
+    private final OpenmrsUserModel openmrsUserModel;
 
-    private final String keycloakId;
-
-    public UserAdapter(KeycloakSession session, RealmModel realm, ComponentModel storageProviderModel, UserModel userModel) {
+    public UserAdapter(KeycloakSession session, RealmModel realm, ComponentModel storageProviderModel, OpenmrsUserModel openmrsUserModel) {
         super(session, realm, storageProviderModel);
-        this.userModel = userModel;
-        this.keycloakId = StorageId.keycloakId(storageProviderModel, String.valueOf(userModel.getUserId()));
+        this.openmrsUserModel = openmrsUserModel;
     }
 
     @Override
     public String getId() {
-        return keycloakId;
+        return String.valueOf(openmrsUserModel.getUserId());
     }
 
     @Override
     public String getUsername() {
-        return userModel.getUsername();
+        return openmrsUserModel.getUsername();
     }
 
     @Override
     public void setUsername(String username) {
-        userModel.setUsername(username);
+        openmrsUserModel.setUsername(username);
     }
 
     @Override
     public String getEmail() {
-        return userModel.getEmail();
+        return openmrsUserModel.getEmail();
     }
 
     @Override
     public void setEmail(String email) {
-        userModel.setEmail(email);
+        openmrsUserModel.setEmail(email);
     }
 }

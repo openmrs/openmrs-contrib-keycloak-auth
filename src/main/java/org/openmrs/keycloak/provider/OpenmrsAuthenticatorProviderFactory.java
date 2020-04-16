@@ -3,10 +3,9 @@ package org.openmrs.keycloak.provider;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.storage.UserStorageProviderFactory;
+import org.openmrs.keycloak.data.UserDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Properties;
 
 public class OpenmrsAuthenticatorProviderFactory
                  implements UserStorageProviderFactory<OpenmrsAuthenticator> {
@@ -17,7 +16,7 @@ public class OpenmrsAuthenticatorProviderFactory
 
     @Override
     public OpenmrsAuthenticator create(KeycloakSession keycloakSession, ComponentModel componentModel) {
-        return new OpenmrsAuthenticator(keycloakSession,componentModel);
+        return new OpenmrsAuthenticator(keycloakSession,componentModel,new UserDao());
     }
 
     @Override

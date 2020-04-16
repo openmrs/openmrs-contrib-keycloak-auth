@@ -22,7 +22,6 @@ import javax.persistence.PersistenceException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Properties;
 
 @Setter(AccessLevel.PACKAGE)
 public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInputValidator, UserStorageProvider {
@@ -30,29 +29,30 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
     protected KeycloakSession session;
     protected ComponentModel model;
 
-//    @Setter(onMethod = @__({@Inject}))
-    protected UserDao userDao=new UserDao();
+    @Setter(onMethod = @__({@Inject}))
+    protected UserDao userDao;
 
     private static final Logger log = LoggerFactory.getLogger(OpenmrsAuthenticator.class);
 
-    public OpenmrsAuthenticator(KeycloakSession session, ComponentModel model) {
+    public OpenmrsAuthenticator(KeycloakSession session, ComponentModel model,UserDao userDao) {
         this.session = session;
         this.model = model;
+        this.userDao=userDao;
     }
 
     @Override
     public UserModel getUserById(String id, RealmModel realmModel) {
-        return new UserAdapter(session, realmModel, model, userDao.getUserByUserId(Integer.parseInt(id)));
+        return new UserAdapter(session, realmModel, model, userDao.getMrsUserByUserId(Integer.parseInt(id)));
     }
 
     @Override
     public UserModel getUserByUsername(String username, RealmModel realmModel) {
-        return new UserAdapter(session, realmModel, model, userDao.getUserByUsername(username));
+        return new UserAdapter(session, realmModel, model, userDao.getMrsUserByUsername(username));
     }
 
     @Override
     public UserModel getUserByEmail(String email, RealmModel realmModel) {
-        return new UserAdapter(session, realmModel, model, userDao.getUserByEmail(email));
+        return new UserAdapter(session, realmModel, model, userDao.getMrsUserByEmail(email));
     }
 
     @Override

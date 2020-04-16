@@ -11,7 +11,7 @@
         <!-- Change this to the name of the actual class -->
         <class>org.openmrs.keycloak.models.PersonModel</class>
         <class>org.openmrs.keycloak.models.PersonNameModel</class>
-        <class>org.openmrs.keycloak.models.UserModel</class>
+        <class>org.openmrs.keycloak.models.OpenmrsUserModel</class>
 
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

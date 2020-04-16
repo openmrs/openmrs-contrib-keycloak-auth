@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public @Data class UserModel {
+public @Data class OpenmrsUserModel {
 
     @Id
     @Column(name = "user_id")

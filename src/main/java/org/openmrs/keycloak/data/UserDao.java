@@ -3,7 +3,8 @@ package org.openmrs.keycloak.data;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.keycloak.models.UserModel;
+import org.openmrs.keycloak.models.OpenmrsUserModel;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -14,20 +15,20 @@ public class UserDao {
     @PersistenceContext(unitName = "openmrs-persistence")
     private EntityManager em;
 
-    public UserModel getUserByUsername(String username) {
-        TypedQuery<UserModel> query = em.createQuery("select u from UserModel u where u.username = :username", UserModel.class);
+    public OpenmrsUserModel getMrsUserByUsername(String username) {
+        TypedQuery<OpenmrsUserModel> query = em.createQuery("select u from OpenmrsUserModel u where u.username = :username", OpenmrsUserModel.class);
         query.setParameter("username", username);
         return query.getSingleResult();
     }
 
-    public UserModel getUserByUserId(Integer userId) {
-        TypedQuery<UserModel> query = em.createQuery("select u from UserModel u where u.userId = :userId", UserModel.class);
+    public OpenmrsUserModel getMrsUserByUserId(Integer userId) {
+        TypedQuery<OpenmrsUserModel> query = em.createQuery("select u from OpenmrsUserModel u where u.userId = :userId", OpenmrsUserModel.class);
         query.setParameter("userId", userId);
         return query.getSingleResult();
     }
 
-    public UserModel getUserByEmail(String email) throws NotImplementedException {
-        TypedQuery<UserModel> query = em.createQuery("select u from UserModel u where u.email = :email", UserModel.class);
+    public OpenmrsUserModel getMrsUserByEmail(String email) throws NotImplementedException {
+        TypedQuery<OpenmrsUserModel> query = em.createQuery("select u from OpenmrsUserModel u where u.email = :email", OpenmrsUserModel.class);
         query.setParameter("userId", email);
         return query.getSingleResult();
     }
