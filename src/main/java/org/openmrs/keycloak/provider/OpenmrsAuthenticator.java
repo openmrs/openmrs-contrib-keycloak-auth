@@ -1,6 +1,7 @@
 package org.openmrs.keycloak.provider;
 
 
+import lombok.AccessLevel;
 import lombok.Setter;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.credential.CredentialInput;
@@ -23,6 +24,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
+@Setter(AccessLevel.PACKAGE)
 public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInputValidator, UserStorageProvider {
 
     protected KeycloakSession session;
