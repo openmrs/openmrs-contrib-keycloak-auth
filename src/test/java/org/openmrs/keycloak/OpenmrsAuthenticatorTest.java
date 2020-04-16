@@ -16,8 +16,6 @@ public class OpenmrsAuthenticatorTest extends JPAHibernateTest {
 
     private KeycloakSession session;
 
-    private Properties properties;
-
     private ComponentModel model;
 
     @Inject
@@ -26,7 +24,7 @@ public class OpenmrsAuthenticatorTest extends JPAHibernateTest {
 
     @Before
     public void setup() {
-        openmrsAuthenticator = new OpenmrsAuthenticator(session, properties, model);
+        openmrsAuthenticator = new OpenmrsAuthenticator(session, model);
     }
 
     @Test

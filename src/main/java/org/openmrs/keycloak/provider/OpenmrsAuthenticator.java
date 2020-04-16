@@ -28,7 +28,6 @@ import java.util.Properties;
 public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInputValidator, UserStorageProvider {
 
     protected KeycloakSession session;
-    protected Properties properties;
     protected ComponentModel model;
 
 //    @Setter(onMethod = @__({@Inject}))
@@ -36,9 +35,8 @@ public class OpenmrsAuthenticator implements UserLookupProvider, CredentialInput
 
     private static final Logger log = LoggerFactory.getLogger(OpenmrsAuthenticator.class);
 
-    public OpenmrsAuthenticator(KeycloakSession session, Properties properties, ComponentModel model) {
+    public OpenmrsAuthenticator(KeycloakSession session, ComponentModel model) {
         this.session = session;
-        this.properties = properties;
         this.model = model;
     }
 

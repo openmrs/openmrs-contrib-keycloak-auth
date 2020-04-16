@@ -15,11 +15,9 @@ public class OpenmrsAuthenticatorProviderFactory
 
     private static final Logger logger = LoggerFactory.getLogger(OpenmrsAuthenticatorProviderFactory.class);
 
-    protected Properties properties = new Properties();
-
     @Override
     public OpenmrsAuthenticator create(KeycloakSession keycloakSession, ComponentModel componentModel) {
-        return new OpenmrsAuthenticator(keycloakSession,properties,componentModel);
+        return new OpenmrsAuthenticator(keycloakSession,componentModel);
     }
 
     @Override
