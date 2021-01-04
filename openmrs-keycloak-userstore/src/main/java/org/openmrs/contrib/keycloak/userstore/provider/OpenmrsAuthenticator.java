@@ -25,7 +25,11 @@ import lombok.Setter;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
-import org.keycloak.models.*;
+import org.keycloak.models.GroupModel;
+import org.keycloak.models.KeycloakSession;
+import org.keycloak.models.RealmModel;
+import org.keycloak.models.UserCredentialModel;
+import org.keycloak.models.UserModel;
 import org.keycloak.models.credential.PasswordCredentialModel;
 import org.keycloak.storage.StorageId;
 import org.keycloak.storage.UserStorageProvider;
@@ -145,7 +149,7 @@ public class OpenmrsAuthenticator implements CredentialInputValidator, UserLooku
 	
 	@Override
 	public List<UserModel> getUsers(RealmModel realmModel) {
-		return getUsers(realmModel, 0, -1);
+		return getUsers(realmModel, 0, Integer.MAX_VALUE);
 	}
 	
 	@Override
@@ -179,7 +183,7 @@ public class OpenmrsAuthenticator implements CredentialInputValidator, UserLooku
 	
 	@Override
 	public List<UserModel> getGroupMembers(RealmModel realmModel, GroupModel groupModel, int i, int i1) {
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 	
 	@Override
@@ -189,6 +193,6 @@ public class OpenmrsAuthenticator implements CredentialInputValidator, UserLooku
 	
 	@Override
 	public List<UserModel> searchForUserByUserAttribute(String s, String s1, RealmModel realmModel) {
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 }
