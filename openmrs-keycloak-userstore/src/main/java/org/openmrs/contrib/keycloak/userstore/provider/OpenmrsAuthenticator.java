@@ -160,7 +160,7 @@ public class OpenmrsAuthenticator implements CredentialInputValidator, UserLooku
 	
 	@Override
 	public List<UserModel> searchForUser(String s, RealmModel realmModel) {
-		return searchForUser(s, realmModel, 0, -1);
+		return searchForUser(s, realmModel, 0, Integer.MAX_VALUE);
 	}
 	
 	@Override
@@ -172,7 +172,7 @@ public class OpenmrsAuthenticator implements CredentialInputValidator, UserLooku
 	
 	@Override
 	public List<UserModel> searchForUser(Map<String, String> map, RealmModel realmModel) {
-		return searchForUser(map, realmModel, 0, -1);
+		return searchForUser(map, realmModel, 0, Integer.MAX_VALUE);
 	}
 	
 	@Override
