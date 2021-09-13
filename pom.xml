@@ -278,7 +278,7 @@
     </build>
 
     <properties>
-        <keycloak.version>12.0.0</keycloak.version>
+        <keycloak.version>13.0.0</keycloak.version>
         <openmrsPlatformVersion>2.4.0</openmrsPlatformVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
